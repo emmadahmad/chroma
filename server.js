@@ -25,10 +25,10 @@ io.set('log level', 2);
 
 /* Because of the configuration below socket.on(disconnect) was not being called. Figure out why.*/
 
-/*io.configure(function () {
+io.configure(function () {
   io.set("transports", ["xhr-polling"]); 
   io.set("polling duration", 10); 
-});*/
+});
 
 io.sockets.on('connection', function (socket)
 {
