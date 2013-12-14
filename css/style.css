@@ -1,0 +1,57 @@
+.logo { padding:10px 20px; text-align:center; }
+.label { text-align:center; font-weight:bold; }
+.heading {text-align:center;}
+.center {text-align:center;}
+.left {float:left;}
+.right {float:right;}
+.thumb {width:40px;height:40px;background-color:#888;float:left;}
+.media-object {width:40px;height:40px;background-color:#888;margin:0 10px;}
+.info {float:left;padding-left:10px;line-height:40px;}
+.chat {background-color: #fff; border: 1px solid #ddd;padding:10px 15px;display:inline-block;}
+.time {display:block;color:#bbb;font-style:italic;font-size:11px;padding-top:2px;font-weight:bold;}
+.uname {display:block;font-size:12px;color:#999;text-align: center;}
+p {margin:0;}
+.text-right {text-align: right;}
+.text-left {text-align: left;}
+.media {margin-top:15px;}
+#logoHead {font-family: Arial, sans-serif;}
+#save-image, #takepic, #end-call{max-width:320px; margin:0 auto;}
+#end-call {display:block;}
+#u-error {display:none;}
+#chat-submit {padding:10px;}
+#calling h1, #incoming h1, #calling h3, #incoming h3{text-align: center;}
+
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #fff;
+}
+
+#image {display:block; margin:0 auto;}
+#stream {text-align: center; position:relative;}
+#feed, #remoteFeed, #remoteVideo, #video, #remote, #mini, #photoback, #photo{display:none;}
+#mini { width:15%; background-color:#eee; position:absolute;left:25%; z-index: 2;}
+#display, #remote{width:50%; z-index: 1;}
+
+
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
