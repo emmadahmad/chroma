@@ -1,3 +1,11 @@
+p {margin:0;}
+input {background-color:#fff !important;color:#4B465A !important;}
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #fff;
+}
+
 .logo { padding:10px 20px; text-align:center; }
 .label { text-align:center; font-weight:bold; }
 .heading {text-align:center;}
@@ -5,33 +13,34 @@
 .left {float:left;}
 .right {float:right;}
 .thumb {width:40px;height:40px;background-color:#888;float:left;}
+.user a {padding:5px 10px;}
 .media-object {width:40px;height:40px;background-color:#888;margin:0 10px;}
 .info {float:left;padding-left:10px;line-height:40px;}
-.chat {background-color: #fff; border: 1px solid #ddd;padding:10px 15px;display:inline-block;}
+.chat {border: 1px solid #ddd;background-color: #fff;padding:10px 15px;display:inline-block;width:68%;}
 .time {display:block;color:#bbb;font-style:italic;font-size:11px;padding-top:2px;font-weight:bold;}
 .uname {display:block;font-size:12px;color:#999;text-align: center;}
-p {margin:0;}
 .text-right {text-align: right;}
 .text-left {text-align: left;}
 .media {margin-top:15px;}
+.fa {text-shadow: none;}
+.ui-btn{border:none;}
+.me {background-color:#E5F6FD;}
+.ui-input-text {padding:5px 10px;background-color: #fff; border:none;}
+
+#u-error {background-color:#7FD7F7;text-align: center;padding:10px 5px;}
 #logoHead {font-family: Arial, sans-serif;}
 #save-image, #takepic, #end-call{max-width:320px; margin:0 auto;}
 #end-call {display:block;}
 #u-error {display:none;}
-#chat-submit {padding:10px;}
+#chat-submit {background-color: #E5F6FD;}
+#chat-submit .ui-input-text {margin:10px;}
 #calling h1, #incoming h1, #calling h3, #incoming h3{text-align: center;}
-
-body {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #fff;
-}
-
 #image {display:block; margin:0 auto;}
 #stream {text-align: center; position:relative;}
 #feed, #remoteFeed, #remoteVideo, #video, #remote, #mini, #photoback, #photo{display:none;}
 #mini { width:15%; background-color:#eee; position:absolute;left:25%; z-index: 2;}
 #display, #remote{width:50%; z-index: 1;}
+#btn-submit {position:absolute;right:15px;top:13px;}
 
 
 

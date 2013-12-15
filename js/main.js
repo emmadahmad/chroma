@@ -12,12 +12,9 @@
 				'</a>'
 			].join(""),
 			client: [
-				'<li class="user" data-clientId="${clientId}"><a href="#chat-${clientId}" data-transition="slide">',
+				'<li class="user" data-clientId="${clientId}"><a class="users" href="#chat-${clientId}" data-transition="slide">',
 				'<div class="thumb"><img src="images/user-thumb.png" /></div>',
 				'<span class="info">${username}</span></a></li>'
-			].join(""),
-			chatSection: [
-		        '<div id="chat-${cId}"><h1>${cId}</h1></div>'
 			].join(""),
 			messageMe: [
 				'<div class="media">',
@@ -26,7 +23,7 @@
 						'<span class="uname">You</span>',
 					'</div>',
 					'<div class="media-body text-left">',
-						'<p class="chat">',
+						'<p class="chat me">',
 							'${message}',
 							'<span class="time">${time}</span>',
 						'</p>',
@@ -48,19 +45,19 @@
 				'</div>'
 			].join(""),
 			chatPage: [
-				'<div data-role="page" id="chat-${cId}" data-theme="c"><div data-role="header" data-theme="c" data-position="fixed">',
-				'<h3> ${name} </h3><a href="#user-panel" data-theme="c" ><i class="fa fa-user fa-lg"></i></a>',
-				'<a href="#calling" id="call" data-transition="flip" data-rel="dialog" data-theme="c" ><i class="fa fa-video-camera fa-lg"></i></a></div>',
+				'<div data-role="page" id="chat-${cId}" data-theme="a"><div data-role="header" data-theme="a" data-position="fixed">',
+				'<h3> ${name} </h3><a href="#user-panel" data-theme="a" ><i class="fa fa-user fa-lg"></i></a>',
+				'<a href="#calling" id="call" data-transition="flip" data-rel="dialog" data-theme="a" ><i class="fa fa-video-camera fa-lg"></i></a></div>',
 				'<div id="chat-panel" data-role="content"></div>',
-				'<div data-role="panel" data-position-fixed="true" data-theme="c" id="user-panel">',        
-				'<ul id="users" data-role="listview" data-theme="c" class="ui-icon-alt"></ul></div>',
-				'<div id="chat-submit" data-role="footer" data-theme="c" data-position="fixed">',
+				'<div data-role="panel" data-display="push" data-position-fixed="true" data-theme="b" id="user-panel">',        
+				'<ul id="users" data-role="listview" data-theme="b"></ul></div>',
+				'<div id="chat-submit" data-role="footer" data-theme="b" data-position="fixed">',
 				'<input type="text" name="message" id="message" value="" placeholder="Type your message here"  />',
-				'<a id="btn-submit" href="#" data-role="button">Send</a></div></div>'
+				'<a data-theme="a" id="btn-submit" href="#" data-role="button">Send</a></div></div>'
 			].join("")
 		};
 	
-	var listItems = '<li data-icon="gear" ><a href="#home" data-transition="slide" data-direction="reverse">Home</a></li>' + 
+	var listItems = '<li data-theme="a" data-icon="home"><a href="#home" data-transition="slide" data-direction="reverse" >Home</a></li>' + 
 					'<li data-role="list-divider">Online</li>';
 	
 	var video = document.getElementById('video'),
@@ -529,6 +526,7 @@
 	function addChat(cId)
 	{
 		var name = getName(cId);
+		name = name.charAt(0).toUpperCase() + name.slice(1);
 		if($("#chat-" + cId).length == 0) 
 		{
 			var $html = $.tmpl(tmplt.chatPage, 
@@ -550,15 +548,18 @@
 	function addClient()
 	{
 		var $html;
+		var un;
 		
 		for(var i = 0, len = userList.length; i < len; i++)
 		{
 			if(userList[i])
 			{
+				un = userList[i].username;
+				un = un.charAt(0).toUpperCase() + un.slice(1);
 				$html = $.tmpl(tmplt.client, 
 				{
 					clientId : userList[i].clientId,
-					username : userList[i].username
+					username : un
 				});
 				$html.appendTo(":jqmData(role='panel') #users");
 			}

@@ -6,8 +6,9 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi">
         <meta name="format-detection" content="telephone-no">
         <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/style.css" rel="stylesheet" media="screen">
-        <link href="css/themes/default/jquery.mobile-1.3.2.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="css/themes/jquery.mobile.structure-1.3.2.css" /> 
+        <link rel="stylesheet" href="css/themes/skyblue.css">
+        <link rel="stylesheet" href="css/style.css" media="screen">
         
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -19,28 +20,28 @@
     <body>
         
         <!-- Welcome -->
-        <div data-role="page" data-url="welcome" id="welcome" data-theme="c">
+        <div data-role="page" data-url="welcome" id="welcome" data-theme="e">
             <div data-role="content">
                 <div class="container">
                     <form class="form-signin">
                         <h2 class="form-signin-heading text-center">Chroma Key</h2>
                         <div id="u-error" class="alert alert-danger">Error</div>
                         <input id="txtUsername" type="text" class="form-control" placeholder="Username" required autofocus>
-                        <a href="#home" id="btn-signin" data-theme="c" data-role="button"  >Sign In</a>
+                        <a href="#home" id="btn-signin" data-role="button"  >Sign In</a>
                     </form>
                 </div>  
             </div>
         </div>
         <!-- Home -->
-        <div data-role="page" class="ui-responsive-panel" id="home" data-url="home">
-            <div data-role="header" data-theme="c" data-position="fixed">
+        <div data-role="page" class="ui-responsive-panel" data-theme="b" id="home" data-url="home">
+            <div data-theme="a" data-role="header" data-position="fixed">
                 <h3> Home </h3>
-                <a href="#user-panel" data-theme="c" ><i class="fa fa-user fa-lg"></i></a>
-                <a href="#settings-panel" data-theme="c" ><i class="fa fa-cog fa-lg"></i></a>
+                <a href="#user-panel" ><i class="fa fa-user fa-lg"></i></a>
+                <a href="#settings-panel" ><i class="fa fa-cog fa-lg"></i></a>
             </div>
             <div data-role="content">                
                 <div data-role="fieldcontain" class="center">                    
-                    <select name="toggle-chroma" id="toggle-chroma" data-role="slider" >
+                    <select data-theme="f" name="toggle-chroma" id="toggle-chroma" data-role="slider" >
                         <option value="off">Off</option>
                         <option value="on">On</option>
                     </select>
@@ -57,55 +58,55 @@
                     <br>                    
                     <canvas id="foreground" height="50"></canvas>                    
                 </div>
-                <a href="#" id="end-call" data-transition="flip" data-theme="c" data-role="button" >End Call</a>
+                <a href="#" id="end-call" data-transition="flip" data-theme="d" data-role="button" >End Call</a>
                 <br />
                 
-                <a href="#photo-view" id="takepic" data-transition="slide" data-theme="c" data-role="button" >Take Picture</a>
+                <a href="#photo-view" id="takepic" data-transition="slide" data-theme="a" data-role="button" ><i class="fa fa-lg fa-camera"></i></a>
             </div>
             
             <!-- User panel -->
-            <div data-role="panel" data-display="push" data-position-fixed="true" data-theme="c" id="user-panel">
-                <ul id="users" data-role="listview" data-theme="c" class="ui-icon-alt">
+            <div data-role="panel" data-display="push" data-position-fixed="true" data-theme="b" id="user-panel">
+                <ul id="users" data-theme="b" data-role="listview" >
                     
                 </ul>
             </div>
             
             <!-- Settings panel -->
-            <div data-role="panel" data-display="overlay" data-position="right" data-position-fixed="true" data-theme="c" id="settings-panel">
-                <ul data-role="listview" data-theme="c" class="nav-search">                    
-                    <li data-role="list-divider">Chroma</li>
-                    <li data-theme="c" data-role="fieldcontain">
+            <div data-role="panel" data-display="overlay" data-position="right" data-theme="b" data-position-fixed="true" id="settings-panel">
+                <ul data-theme="b" data-role="listview" class="nav-search">                    
+                    <li data-theme="f" data-role="list-divider">Chroma</li>
+                    <li data-role="fieldcontain">
                         <p class="label">Chroma Sensitivity</p>
-                        <input type="range" name="slider-s" id="slider-s" value="30" min="0" max="255" data-highlight="true">
+                        <input data-theme="f" type="range" name="slider-s" id="slider-s" value="30" min="0" max="255" data-highlight="true">
                     </li>
                     
-                    <li data-role="list-divider">Background Image</li>
-                    <li data-theme="c" data-role="fieldcontain">
+                    <li data-theme="f" data-role="list-divider">Background Image</li>
+                    <li data-role="fieldcontain">
                         <p class="label">
                             Select Image
                         </p>
                         <input type="file" name="backfiles[]" id="backfiles" value="">
                     </li>
                     
-                    <li data-role="list-divider">Hold Screen</li>
-                    <li data-theme="c" data-role="fieldcontain">
+                    <li data-theme="f" data-role="list-divider">Hold Screen</li>
+                    <li data-role="fieldcontain">
                         <p class="label">
                             Select Image
                         </p>
                         <input type="file" name="holdfiles[]" id="holdfiles" value="">
                     </li>                                       
-                    <li data-role="list-divider">iBadge</li>
-                    <li data-theme="c" data-role="fieldcontain">
+                    <li data-theme="f" data-role="list-divider">iBadge</li>
+                    <li data-role="fieldcontain">
                         <p class="label">
                             Select Image
                         </p>
                         <input type="file" name="forefiles[]" id="forefiles" value="">
                     </li>
-                    <li data-theme="c" data-role="fieldcontain">
+                    <li data-role="fieldcontain">
                         <p class="label">
                             iBadge Opacity
                         </p>
-                        <input type="range" name="slider-o" id="slider-o" value="0.5" min="0" max="1" step='.001' data-highlight="true">
+                        <input data-theme="f" type="range" name="slider-o" id="slider-o" value="0.5" min="0" max="1" step='.001' data-highlight="true">
                     </li>
                 </ul>
             </div><!-- END of settings panel -->
@@ -113,22 +114,22 @@
 
         <!-- photo View -->
         <div data-role="page" class="ui-responsive-panel" id="photo-view" data-url="photo-view">
-            <div data-role="header" data-theme="c" data-position="fixed">
+            <div data-role="header" data-theme="a" data-position="fixed">
                 <h3> Chroma </h3>
-                <a href="#" data-rel="back" data-transition="slide" data-direction="reverse" data-theme="c" ><i class="fa fa-chevron-left fa-lg"></i></a>                
+                <a href="#" data-rel="back" data-transition="slide" data-direction="reverse" data-theme="a" ><i class="fa fa-chevron-left fa-lg"></i></a>                
             </div>
             <div data-role="content">
                 <canvas id="photo" width="700" height="495"></canvas>
                 <canvas id="photoback" width="700" height="495"></canvas>
                 <img id="image" src=""/>                
                 <canvas id="forephoto" height="50"></canvas>
-                <a href="#home" id="save-image" data-transition="slide" data-direction="reverse" download="output.jpg" data-theme="c" data-role="button">Download</a>
+                <a href="#home" id="save-image" data-transition="slide" data-direction="reverse" download="output.jpg" data-theme="a" data-role="button">Download</a>
             </div>
         </div>
         
         <!-- Calling -->
-        <div data-close-btn="none" data-role="page" class="ui-responsive-panel" id="calling" data-url="calling">
-            <div data-role="header" data-theme="b" data-position="fixed">
+        <div data-close-btn="none" data-role="page" data-overlay-theme="e" data-theme="a" class="ui-responsive-panel" id="calling" data-url="calling">
+            <div data-role="header" data-position="fixed">
                 <h3> Call </h3>
             </div>
             <div data-role="content">
@@ -138,21 +139,21 @@
         </div>
         
         <!-- Incoming Call -->
-        <div data-close-btn="none" data-role="page" class="ui-responsive-panel" id="incoming" data-url="incoming">
-            <div data-role="header" data-theme="b" data-position="fixed">
+        <div data-close-btn="none" data-role="page" data-overlay-theme="e" data-theme="a" class="ui-responsive-panel" id="incoming" data-url="incoming">
+            <div data-role="header" data-position="fixed">
                 <h3> Incoming Call </h3>
             </div>
             <div data-role="content">
                 <h1>Someone Calling</h1>
-                <a href="#" id="reject-call" data-rel="back" data-role="button">Reject</a>
-                <a href="#home" id="accept-call" data-role="button">Answer</a>
+                <a data-theme="c"href="#home" id="accept-call" data-role="button">Answer</a>
+                <a data-theme="d" href="#" id="reject-call" data-rel="back" data-role="button">Reject</a>                
             </div>
         </div>
 
         <script src='/socket.io/socket.io.js'></script>
         <!--<script src='js/jquery-1.10.2.min.js'></script>-->
         <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
-        <script src="js/jquery.mobile-1.3.2.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script> 
         <script src="js/jquery.tmpl.min.js"></script>
         <script src="js/adapter.js"></script>
         <script src="js/main.js"></script>
