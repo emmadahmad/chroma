@@ -48,15 +48,15 @@
                 </div>
                 
                 <div id="stream">
-                    <video id="video" autoplay="autoplay" width="100%" height="100%" muted></video>
-                    <video id="remoteVideo" autoplay="autoplay" width="100%" height="100%"></video>
+                    <video id="video" autoplay="autoplay" width="700" height="495" muted></video>
+                    <video id="remoteVideo" autoplay="autoplay" width="700" height="495"></video>
                     <canvas id="feed" width="700" height="495" ></canvas>
                     <canvas id="display" width="700" height="495" ></canvas>
                     <canvas id="mini" width="700" height="495" ></canvas>
                     <canvas id="remoteFeed" width="700" height="495" ></canvas>
-                    <canvas id="remote" width="700" height="495" ></canvas>                                        
-                    <br>                    
-                    <canvas id="foreground" height="50"></canvas>                    
+                    <canvas id="remoteFg" width="700" height="495" ></canvas>
+                    <canvas id="remote" width="700" height="495" ></canvas>
+                    <canvas id="foreground" width="700" height="495"></canvas>                                        
                 </div>
                 <a href="#" id="end-call" data-transition="flip" data-theme="d" data-role="button" >End Call</a>
                 <br />
@@ -98,16 +98,11 @@
                     <li data-theme="f" data-role="list-divider">iBadge</li>
                     <li data-role="fieldcontain">
                         <p class="label">
-                            Select Image
-                        </p>
-                        <input type="file" name="forefiles[]" id="forefiles" value="">
-                    </li>
-                    <li data-role="fieldcontain">
-                        <p class="label">
                             iBadge Opacity
                         </p>
                         <input data-theme="f" type="range" name="slider-o" id="slider-o" value="0.5" min="0" max="1" step='.001' data-highlight="true">
                     </li>
+                    <li data-theme="a" data-icon="arrow-r"><a href="#ib-settings" data-transition="slide" data-direction="reverse" >iBadge Settings</a></li>
                 </ul>
             </div><!-- END of settings panel -->
         </div>
@@ -124,6 +119,25 @@
                 <img id="image" src=""/>                
                 <canvas id="forephoto" height="50"></canvas>
                 <a href="#home" id="save-image" data-transition="slide" data-direction="reverse" download="output.jpg" data-theme="a" data-role="button">Download</a>
+            </div>
+        </div>
+        
+        <!-- ibadge Settings -->
+        <div data-role="page" class="ui-responsive-panel" id="ib-settings" data-url="ib-settings">
+            <div data-role="header" data-theme="a" data-position="fixed">
+                <h3> iBadge Settings </h3>
+                <a href="#" data-rel="back" data-transition="slide" data-direction="reverse" data-theme="a" ><i class="fa fa-chevron-left fa-lg"></i></a>                
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <p class="label">
+                        Select Image
+                    </p>
+                    <input type="file" name="forefiles[]" id="forefiles" value="">
+                </div>
+                <div id="ib-cont"></div>
+                <br />
+                <a href="#home" id="save-ib" data-transition="slide" data-direction="reverse" data-theme="a" data-role="button">Save Settings</a>
             </div>
         </div>
         
@@ -153,7 +167,8 @@
         <script src='/socket.io/socket.io.js'></script>
         <!--<script src='js/jquery-1.10.2.min.js'></script>-->
         <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
-        <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script> 
+        <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+        <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.2.min.js"></script>
         <script src="js/jquery.tmpl.min.js"></script>
         <script src="js/adapter.js"></script>
         <script src="js/main.js"></script>

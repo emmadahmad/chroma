@@ -27,9 +27,11 @@ body {
 .me {background-color:#E5F6FD;}
 .ui-input-text {padding:5px 10px;background-color: #fff; border:none;}
 
+#ib-cont {width: 700px; margin: 0 auto; background-color:#eee;}
+#ib-settings .ui-content .ui-field-contain {width: 700px; margin: 20px auto;}
 #u-error {background-color:#7FD7F7;text-align: center;padding:10px 5px;}
 #logoHead {font-family: Arial, sans-serif;}
-#save-image, #takepic, #end-call{max-width:320px; margin:0 auto;}
+#save-image, #takepic, #end-call, #save-ib{max-width:320px; margin:0 auto;}
 #end-call {display:block;}
 #u-error {display:none;}
 #chat-submit {background-color: #E5F6FD;}
@@ -37,10 +39,11 @@ body {
 #calling h1, #incoming h1, #calling h3, #incoming h3{text-align: center;}
 #image {display:block; margin:0 auto;}
 #stream {text-align: center; position:relative;}
-#feed, #remoteFeed, #remoteVideo, #video, #remote, #mini, #photoback, #photo{display:none;}
+#feed, #remoteFeed, #remoteFg, #remoteVideo, #video, #remote, #mini, #photoback, #photo{display:none;}
 #mini { width:15%; background-color:#eee; position:absolute;left:25%; z-index: 2;}
-#display, #remote{width:50%; z-index: 1;}
+#display, #remote, #foreground, #remoteFg{width:50%; z-index: 1;}
 #btn-submit {position:absolute;right:15px;top:13px;}
+#foreground, #remoteFg {position: absolute; left: 25%; top: 0px;}
 
 
 

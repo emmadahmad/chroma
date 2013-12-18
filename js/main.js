@@ -1,6 +1,7 @@
 (function($)
 {
 	$("#end-call").hide();
+	$("#foreground").hide();
 	var NICK_MAX_LENGTH = 10,
 		ROOM_MAX_LENGTH = 10,
 		room = "Lobby",
@@ -68,6 +69,7 @@
 	feed = document.getElementById('feed'), 
 	display = document.getElementById('display'),
 	remote = document.getElementById('remote'),
+	remoteFg = document.getElementById('remoteFg'),
 	remoteFeed = document.getElementById('remoteFeed'),
 	mini = document.getElementById('mini'),
 	foreground = document.getElementById('foreground'), 
@@ -78,7 +80,9 @@
 	displayCtx = display.getContext('2d'),
 	rFeedCtx = remoteFeed.getContext('2d'),
 	remoteCtx = remote.getContext('2d'),
+	remoteFgCtx = remoteFg.getContext('2d'),
 	miniCtx = mini.getContext('2d'),
+	foreCtx = foreground.getContext('2d'),
 	photoCtx = photo.getContext('2d'),
 	photobackCtx = photoback.getContext('2d'),
 	selectBox = document.getElementById("toggle-chroma"),
@@ -100,7 +104,8 @@
 		'range' : 80,
 		'colors' : [0, 0, 200],
 		'on' : 0,
-		'bgFile' : null
+		'bgFile' : null,
+		'fgFile' : null
 	};
 
 	//WEBRTC Variables
@@ -156,8 +161,10 @@
 			options.id = receiverId;
 			sendOptions(options);
 			$("#remote").show();
+			$("#remoteFg").show();
 			$("#mini").show();
 			$("#display").hide();
+			$("#foreground").hide();
 			$("#end-call").show();
 			
 			
@@ -201,6 +208,11 @@
 				changeHash : true
 			});
 			hangup();
+		});
+		
+		$('#save-ib').on('click', function()
+		{
+			saveIbSettings();
 		});
 		
 		$('#toggle-chroma').on('change', function()
@@ -321,8 +333,10 @@
 						changeHash : true
 					});
 					$("#remote").show();
+					$("#remoteFg").show();
 					$("#mini").show();
 					$("#display").hide();
+					$("#foreground").hide();
 					$("#end-call").show();
 					isChannelReady = true;
 					options.id = receiverId;
@@ -346,8 +360,10 @@
 					if(message.sender == inCallClient)
 					{
 						$("#remote").hide();
+						$("#remoteFg").hide();
 						$("#mini").hide();
 						$("#display").show();
+						$("#foreground").show();
 						$("#end-call").hide();
 						handleRemoteHangup();
 					}						
@@ -390,9 +406,14 @@
 					options.on = opt.on;
 					if (opt.bgFile != null)
 					{
-						console.log(opt.bgFile);
 						options.bgFile = opt.bgFile;
-						document.getElementById('remote').style.backgroundImage = "url(" + opt.value + ")";
+						document.getElementById('remote').style.backgroundImage = "url(" + opt.bgFile + ")";
+					}
+					if (opt.fgFile != null)
+					{
+						console.log(opt.fgFile);
+						options.fgFile = opt.fgFile;
+						remoteFgCtx.putImageData(opt.fgFile,0,0);
 					}
 					
 				}
@@ -410,11 +431,19 @@
 				}
 				else if (opt.type == 'bgFile')
 				{
-					if (opt.bgFile != null)
+					if (opt.value != null)
 					{
 						console.log(opt.value);
 						options.bgFile = opt.value;
 						document.getElementById('remote').style.backgroundImage = "url(" + opt.value + ")";
+					}
+				}
+				else if (opt.type == 'fgFile')
+				{
+					if (opt.fgFile != null)
+					{						
+						options.fgFile = opt.value;
+						remoteFgCtx.putImageData(opt.value,0,0);
 					}
 				}
 			}
@@ -607,6 +636,28 @@
 	{
 		socket.emit('options', options);
 	}
+	
+	function saveIbSettings()
+	{
+		var ib = $("#ib-cont canvas");
+		var ibCtx = ib[0].getContext('2d');
+		var imgData = ibCtx.getImageData(0,0,700,495);
+		foreCtx.putImageData(imgData,0,0);
+		
+		if (isStarted)
+		{
+			sendOptions({
+				id : inCallClient,
+				type : 'fgFile',
+				value :  imgData
+			});
+		}
+		else if (!isStarted)
+		{
+			options.fgFile = imgData;
+		}
+		$("#foreground").show();
+	}
 
 	$(function()
 	{
@@ -711,6 +762,7 @@
 		photo.height = height;
 		photoCtx.drawImage(photoback, 0, 0, width, height);
 		photoCtx.drawImage(display, 0, 0, width, height);
+		photoCtx.drawImage(foreground, 0, 0, width, height);
 		var img    = photo.toDataURL("image/jpg");
 		document.getElementById("image").src=img;
 		document.getElementById("save-image").href = document.getElementById("image").src;	
@@ -755,7 +807,7 @@
 	    miniCtx.putImageData(imageData, 0, 0);
 	    if(isStarted)
     	{
-	    	rFeedCtx.drawImage(remoteVideo, 0, 0);
+	    	rFeedCtx.drawImage(remoteVideo, 0, 0, width, height);
 	    	remoteData = rFeedCtx.getImageData(0, 0, width, height);
 	    	if (options.on)
     		{
@@ -951,6 +1003,9 @@
 		$("#remote").hide();
 		$("#mini").hide();
 		$("#display").show();
+		$("#remoteFg").hide();
+		$("#foreground").hide();
+		$("#end-call").hide();
 	}
 
 	function handleRemoteHangup() 
@@ -1162,11 +1217,10 @@
 
 			// Closure to capture the file information.
 			reader.onload = (function(theFile) {
-				return function(e) {
-					// Render thumb nail.
-					//var canvas = document.getElementById('canvas');
-					document.getElementById('foreground').style.backgroundImage = "url(" + e.target.result + ")";
-					document.getElementById('forephoto').style.backgroundImage = "url("	+ e.target.result + ")";
+				return function(e) 
+				{
+					var sources = { img : e.target.result };
+			        loadImages(sources, initStage);
 				};
 			})(f);
 
@@ -1174,6 +1228,166 @@
 			reader.readAsDataURL(f);
 		}
 	}
+	
+	
+	/***********  iBadge Feature  ************/
+	
+	
+	function update(activeAnchor) 
+    {
+        var group = activeAnchor.getParent();
+
+        var topLeft = group.get('.topLeft')[0];
+        var topRight = group.get('.topRight')[0];
+        var bottomRight = group.get('.bottomRight')[0];
+        var bottomLeft = group.get('.bottomLeft')[0];
+        var image = group.get('.image')[0];
+
+        var anchorX = activeAnchor.getX();
+        var anchorY = activeAnchor.getY();
+
+        // update anchor positions
+        switch (activeAnchor.getName()) 
+        {
+            case 'topLeft':
+                topRight.setY(anchorY);
+                bottomLeft.setX(anchorX);
+                break;
+            case 'topRight':
+                topLeft.setY(anchorY);
+                bottomRight.setX(anchorX);
+                break;
+            case 'bottomRight':
+                bottomLeft.setY(anchorY);
+                topRight.setX(anchorX);
+                break;
+            case 'bottomLeft':
+                bottomRight.setY(anchorY);
+                topLeft.setX(anchorX);
+                break;
+        }
+
+        image.setPosition(topLeft.getPosition());
+
+        var width = topRight.getX() - topLeft.getX();
+        var height = bottomLeft.getY() - topLeft.getY();
+        if (width && height) {
+            image.setSize(width, height);
+        }
+    }
+
+    function addAnchor(group, x, y, name) 
+    {
+        var stage = group.getStage();
+        var layer = group.getLayer();
+
+        var anchor = new Kinetic.Circle({
+            x : x,
+            y : y,
+            stroke : '#666',
+            fill : '#ddd',
+            strokeWidth : 1,
+            radius : 4,
+            name : name,
+            draggable : true,
+            dragOnTop : false
+        });
+
+        anchor.on('dragmove', function() {
+            update(this);
+            layer.draw();
+        });
+        anchor.on('mousedown touchstart', function() {
+            group.setDraggable(false);
+            this.moveToTop();
+        });
+        anchor.on('dragend', function() {
+            group.setDraggable(true);
+            layer.draw();
+        });
+        // add hover styling
+        anchor.on('mouseover', function() {
+            var layer = this.getLayer();
+            document.body.style.cursor = 'pointer';
+            this.setStrokeWidth(4);
+            layer.draw();
+        });
+        anchor.on('mouseout', function() {
+            var layer = this.getLayer();
+            document.body.style.cursor = 'default';
+            this.setStrokeWidth(2);
+            layer.draw();
+        });
+
+        group.add(anchor);
+    }
+
+    function loadImages(sources, callback) {
+        var images = {};
+        var loadedImages = 0;
+        var numImages = 0;
+        for (var src in sources) 
+        {
+            numImages++;
+        }
+        for (var src in sources) 
+        {
+            images[src] = new Image();
+            images[src].onload = function()
+            {
+                if (++loadedImages >= numImages)
+                {
+                    callback(images);
+                }
+            };
+            images[src].src = sources[src];
+        }
+    }
+
+    function initStage(images) {
+        var stage = new Kinetic.Stage({
+            container : 'ib-cont',
+            width : 700,
+            height : 495
+        });
+        var imageGroup = new Kinetic.Group({
+            x : 270,
+            y : 100,
+            draggable : true
+        });
+        var layer = new Kinetic.Layer();
+
+        /*
+         * go ahead and add the groups
+         * to the layer and the layer to the
+         * stage so that the groups have knowledge
+         * of its layer and stage
+         */
+        layer.add(imageGroup);
+        stage.add(layer);
+
+        // darth vader
+        var image = new Kinetic.Image({
+            x : 0,
+            y : 0,
+            image : images.img,
+            width : 200,
+            height : 138,
+            name : 'image'
+        });
+
+        imageGroup.add(image);
+        addAnchor(imageGroup, 0, 0, 'topLeft');
+        addAnchor(imageGroup, 200, 0, 'topRight');
+        addAnchor(imageGroup, 200, 138, 'bottomRight');
+        addAnchor(imageGroup, 0, 138, 'bottomLeft');
+
+        imageGroup.on('dragstart', function() {
+            this.moveToTop();
+        });
+
+        stage.draw();
+    }
 	
 
 })(jQuery);
@@ -1186,6 +1400,7 @@ window.onresize = function()
 		$("#image").css( "width", "100%" );
 		$("#remote").css( "width", "100%" );
 		$("#mini").css({ "width" : "40%" , "left" : "0" , "top" : "0"});
+		$("#foreground").css({ "width" : "100%" , "left" : "0"});
 	}
 	else if ( window.innerWidth > 600 )
 	{
@@ -1193,5 +1408,6 @@ window.onresize = function()
 		$("#image").css( "width", "50%" );
 		$("#remote").css( "width", "50%" );
 		$("#mini").css({ "width" : "10%" , "left" : "25%" , "top" : "0"});
+		$("#foreground").css({ "width" : "50%" , "left" : "25%"});
 	}
 };
